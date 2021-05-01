@@ -1,1 +1,3 @@
-### Aim of the experiment
+The Atterberg limits are a basic measure of the nature of a fine-grained soil. Depending on the water content of the soil, it may appear in four states: solid, semi-solid, plastic and liquid. In each state the consistency and behavior of a soil is different and thus so are its engineering properties. Thus, the boundary between each state can be defined based on a change in the soil's behavior. The Atterberg limits can be used to distinguish between silt and clay, and it can distinguish between different types of silts and clays. These limits were created by Albert Atterberg, a Swedish chemist.[1] They were later refined by Arthur Casagrande.
+
+[Read More](docs/Exp-5 AtterbergLimits.pdf)
