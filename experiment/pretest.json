@@ -1,18 +1,57 @@
-[
-{"question":"This is a Sample Question 1?",
-"answers":{
-            "a":"answer1",
-            "b":"answer2",
-            "c":"answer3",
-            "d":"answer4"
-          },
-"correctAnswer":"a"},
-{"question":"This is a Sample Question 2?",
-"answers":{
-            "a":"answer1",
-            "b":"answer2",
-            "c":"answer3",
-            "d":"answer4"
-          },
-"correctAnswer":"c"} 
-]
+{
+	"version": 2.0,
+	"questions": [
+		{
+			"question": "1. The property of a soil which allows it to be deformed rapidly, without rupture is _________
+			"answers": {
+				"a": "Elasticity",
+				"b": "Plasticity",
+				"c": "Tenacity",
+				"d": "None of the mentioned"
+			},
+			"explanations": {
+				"a": "",
+				"b": "Plasticity is the property of a soil which allows it to be deformed rapidly, without rupture, without elastic rebound and without volume change.",",
+				"c": "",
+				"d": ""
+			},
+			"difficulty": "beginner",
+			"correctAnswer": "b"
+		},
+		{
+			"question": "2. The ratio of liquid limit, minus the natural water content to the plasticity index of the soil is ____",
+			"answers": {
+				"a": "Consistency index",
+				"b": "Plasticity index",
+
+				"c": "All of the mentioned",
+				"d": "None of the mentioned"
+			},
+			"explanations": {
+				"a": "",
+				"b": "",
+				"c": "",
+				"d": ""
+			},
+			"difficulty": "intermediate",
+			"correctAnswer": "a"
+		},
+		{
+			"question": "The laboratory test results of a soil sample are given below: Percentage finer than 4.75 mm = 60 Percentage finer than 0.075 mm = 30 Liquid Limit = 35% Plastic Limit = 27% The soil classification is",
+			"answers": {
+				"a": "GM",
+				"b": "SM",
+				"c": "GC",
+				"d": "ML-MI"
+			},
+			"explanations": {
+				"a": "",
+				"b": "Classification of soils.",
+				"c": "",
+				"d": ""
+			},
+			"difficulty": "advanced",
+			"correctAnswer": "b"
+		}
+	]
+}

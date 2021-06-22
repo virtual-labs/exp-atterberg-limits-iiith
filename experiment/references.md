@@ -1,1 +1,8 @@
-### Link your references in here
+- IS : 2720 (Part II) –1973, Method of Test for soil : Part II
+- Soil Mechanics and Foundations 3rd Edition, Muniram Budhu
+- Geotechnical Engineering by C Venkataramaiah
+- Soil Mechanics and Foundations by BC Punmia, Ashok Kumar Jain and Arun Kumar Jain
+- Geotechnical Engineering: Principles and Practices of Soil Mechanics and Foundation Engineering by V.N.S. Murthy
+- [Soil Classification](https://en.wikipedia.org/wiki/Soil_classification)
+- [Wikipedia - Atterberg Limits](https://en.wikipedia.org/wiki/Atterberg_limits)
+- [Answers - Atterberg Limits](https://www.answers.com/topic/atterberg-limits)
