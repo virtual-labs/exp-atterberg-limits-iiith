@@ -35,9 +35,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 		if(translate[0] === 0 && translate[1] === 0)
 		{
-			if(step === 2)
+			if(step === 3)
 			{
-				document.getElementById("output1").innerHTML = "Mass of container = " + String(10) + "g";
+				objs['soil'].color = "#b86d29";
 			}
 
 			else if(step === 4)
@@ -122,6 +122,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			this.width = width;
 			this.radius = radius;
 			this.pos = [x, y];
+			this.color = "#654321";
 		};
 
 		draw(ctx) {
@@ -136,7 +137,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			}
 
 			ctx.beginPath();
-			ctx.fillStyle = "#654321";
+			ctx.fillStyle = this.color;
 			ctx.lineWidth = lineWidth;
 			ctx.beginPath();
 	
@@ -148,28 +149,64 @@ document.addEventListener('DOMContentLoaded', function() {
 			ctx.closePath();
 			ctx.fill();
 			ctx.stroke();
+		};
+	};
+
+	class soilPat {
+		constructor(angle, radius, x, y) {
+			this.angle = angle;
+			this.radius = radius;
+			this.pos = [x, y];
+		};
+
+		draw(ctx) {
+			ctx.beginPath();
+			ctx.fillStyle = "#b86d29";
+			ctx.lineWidth = lineWidth;
+			ctx.beginPath();
+			ctx.ellipse(this.pos[0], this.pos[1], this.radius[0], this.radius[1], this.angle, 0, 2 * Math.PI);
+			ctx.closePath();
+			ctx.fill();
+			ctx.stroke();
+		};
+	};
+
+	class water {
+		constructor(height, width, x, y) {
+			this.height = height;
+			this.width = width;
+			this.pos = [x, y];
+		};
+
+		draw(ctx) {
+			ctx.fillStyle = "#1ca3ec";
+			ctx.lineWidth = 3;
+
+			ctx.beginPath();
+			ctx.rect(this.pos[0], this.pos[1], this.width, this.height);
 			ctx.closePath();
 			ctx.fill();
 			ctx.stroke();
 		};
 
-		heating(unit) {
+		mixing(unit) {
 			this.height -= unit;
+			this.pos[1] += unit;
 		};
 	};
 
-	class weight{
+	class casagrande {
 		constructor(height, width, x, y) {
 			this.height = height;
 			this.width = width;
 			this.pos = [x, y];
 			this.img = new Image();
-			this.img.src = './images/weighing-machine.png';
+			this.img.src = '../images/casagrande.png';
 			this.img.onload = () => { ctx.drawImage(this.img, this.pos[0], this.pos[1], this.width, this.height); }; 
 		};
 
 		draw(ctx) {
-			ctx.drawImage(objs['weight'].img, objs['weight'].pos[0], objs['weight'].pos[1], objs['weight'].width, objs['weight'].height);
+			ctx.drawImage(this.img, this.pos[0], this.pos[1], this.width, this.height);
 		};
 	};
 
@@ -242,14 +279,14 @@ document.addEventListener('DOMContentLoaded', function() {
 		document.getElementById("output2").innerHTML = "Mass of wet soil = ___ g";
 
 		objs = {
-			"weight": new weight(270, 240, 90, 160),
-			"oven": new oven(330, 240, 510, 30),
-			"container": new container(120, 150, 8, 600, 240),
-			"soil": new soil(90, 150, 8, 600, 270),
+			"container": new container(90, 120, 8, 90, 290),
+			"casagrande": new casagrande(180, 210, 540, 200),
+			"water": new water(30, 120, 90, 320),
+			"soil": new soil(40, 120, 8, 90, 340),
 		};
 		keys = [];
 
-		enabled = [["weight"], ["weight", "container"], ["weight", "container"], ["weight", "container", "soil"], ["weight", "container", "soil"], ["container", "soil", "oven"], ["container", "soil", "oven"], ["container", "soil", "oven"], ["weight", "container", "soil"], []];
+		enabled = [["container"], ["container", "soil"], ["container", "soil", "water"], ["container", "soil"], ["container", "soil", "casagrande"], ["soil", "casagrande"], ["container", "soil", "oven"], ["weight", "container", "soil"], []];
 		step = 0;
 		translate = [0, 0];
 		lim = [-1, -1];
@@ -259,7 +296,6 @@ document.addEventListener('DOMContentLoaded', function() {
 	{ 
 		window.clearTimeout(tmHandle); 
 
-		document.getElementById("inputForm").style.display = 'none';
 		document.getElementById("apparatus").style.display = 'block';
 		document.getElementById("observations").style.width = '';
 
@@ -306,22 +342,26 @@ document.addEventListener('DOMContentLoaded', function() {
 		keys.forEach(function(val, ind) {
 			if(canvasPos[0] >= objs[val].pos[0] - errMargin && canvasPos[0] <= objs[val].pos[0] + objs[val].width + errMargin && canvasPos[1] >= objs[val].pos[1] - errMargin && canvasPos[1] <= objs[val].pos[1] + objs[val].height + errMargin)
 			{
-				if(step === 2 && val === "container")
+				if(step === 3 && val === "soil")
 				{
 					hover = true;
-					translate[0] = -5;
-					translate[1] = -5;
-					lim[0] = 135;
-					lim[1] = 110;
+					translate[1] = 1;
+					lim[1] = 350;
 				}
 
-				else if(step === 4 && val === "soil")
+				else if(step === 5 && val === "soil")
 				{
 					hover = true;
-					translate[0] = -5;
+					if(flag)
+					{
+						const center = [objs['soil'].pos[0] + objs['soil'].width / 2, objs['soil'].pos[1] + objs['soil'].height / 2], radius = [30, 45]; 
+						objs['soil'] = new soilPat(75 * Math.PI / 180, radius, center[0], center[1]);
+					}
+
+					translate[0] = 5;
 					translate[1] = -5;
-					lim[0] = 135;
-					lim[1] = 140;
+					lim[0] = 625;
+					lim[1] = 275;
 				}
 
 				else if(step === 6 && val === "container")
@@ -361,21 +401,6 @@ document.addEventListener('DOMContentLoaded', function() {
 		}
 	};
 
-	const sliders = ["soilMass"];
-	sliders.forEach(function(elem, ind) {
-		const slider = document.getElementById(elem);
-		const output = document.getElementById("demo_" + elem);
-		output.innerHTML = slider.value; // Display the default slider value
-
-		slider.oninput = function() {
-			output.innerHTML = this.value;
-			if(ind === 0)
-			{
-				wetSoilMass = this.value;
-			}
-		};
-	});
-
 	function curvedArea(ctx, e, gradX, gradY)
 	{
 		ctx.bezierCurveTo(e[0], e[1] += gradY, e[0] += gradX, e[1] += gradY, e[0] += gradX, e[1]);
@@ -388,7 +413,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	canvas.style = "border:3px solid";
 	const ctx = canvas.getContext("2d");
 
-	const fill = "#A9A9A9", border = "black", lineWidth = 1.5, fps = 150;
+	const fill = "#A9A9A9", border = "black", lineWidth = 1.5, fps = 50;
 	const msgs = [
 		"Click on 'Weighing Machine' in the apparatus menu to add a weighing machine to the workspace.", 
 		"Click on 'Container' in the apparatus menu to add a container to the workspace.",
@@ -415,13 +440,6 @@ document.addEventListener('DOMContentLoaded', function() {
 	objNames.forEach(function(elem, ind) {
 		const obj = document.getElementById(elem);
 		obj.addEventListener('click', function(event) {
-			if(elem === "soil")
-			{
-				enabled[step].pop();
-				document.getElementById("inputForm").style.display = 'block';
-				return;
-			}
-
 			keys.push(elem);
 			step += 1;
 		});
@@ -432,13 +450,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	canvas.addEventListener('mousemove', function(event) {check(event, translate, step, false);});
 	canvas.addEventListener('click', function(event) {check(event, translate, step);});
 
-	const submitButton = document.getElementById("submit"), table = document.getElementsByClassName("table")[0];
-	submitButton.addEventListener('click', function(event) {
-		document.getElementById("inputForm").style.display = 'none';
-		enabled[step].push("soil");
-		keys.push("soil");
-		step += 1;
-	});
+	const table = document.getElementsByClassName("table")[0];
 
 	function responsiveTable(x) {
 		if(x.matches)	// If media query matches
@@ -498,26 +510,23 @@ document.addEventListener('DOMContentLoaded', function() {
 		if(translate[0] != 0 || translate[1] != 0)
 		{
 			let temp = step;
-			const soilMoves = [4, 6, 7, 8], containerMoves = [2, 6, 8];
+			const soilMoves = [5, 6, 7, 8], waterMoves = [3];
 
 			if(soilMoves.includes(step))
 			{
 				updatePos(objs['soil'], translate);
-				if(step === 7)
-				{
-					objs['soil'].heating(translate[1]);
-				}
-
-				if(step === 4 || step === 7)
-				{
-					temp = limCheck(objs['soil'], translate, lim, step);
-				}
+				temp = limCheck(objs['soil'], translate, lim, step);
 			}
 
-			if(containerMoves.includes(step))
+			if(waterMoves.includes(step))
 			{
-				updatePos(objs['container'], translate);
-				temp = limCheck(objs['container'], translate, lim, step);
+				updatePos(objs['water'], translate);
+				if(step === 3)
+				{
+					objs['water'].mixing(translate[1]);
+				}
+
+				temp = limCheck(objs['water'], translate, lim, step);
 			}
 
 			step = temp;
