@@ -231,7 +231,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			this.width = width;
 			this.pos = [x, y];
 			this.img = new Image();
-			this.img.src = '../images/casagrande.png';
+			this.img.src = './images/casagrande.png';
 			this.img.onload = () => { ctx.drawImage(this.img, this.pos[0], this.pos[1], this.width, this.height); }; 
 		};
 
@@ -472,17 +472,16 @@ document.addEventListener('DOMContentLoaded', function() {
 	canvas.style = "border:3px solid";
 	const ctx = canvas.getContext("2d");
 
-	const fill = "#A9A9A9", border = "black", lineWidth = 1.5, fps = 50;
+	const fill = "#A9A9A9", border = "black", lineWidth = 1.5, fps = 150;
 	const msgs = [
-		"Click on 'Weighing Machine' in the apparatus menu to add a weighing machine to the workspace.", 
 		"Click on 'Container' in the apparatus menu to add a container to the workspace.",
-		"Click on the container to move it to the weighing machine and weigh it.",
-		"Click on 'Soil Sample' in the apparatus menu, set appropriate input values (Soil Mass) and click 'Add' to add a soil sample to the workspace.",
-		"Click on the soil sample to add it to the container and weigh it.",
-		"Click on 'Oven' in the apparatus menu to add an oven to the workspace.", 
-		"Click on the container to move it to the oven.",
-		"Click on the oven red portion to start the oven and heat the soil.",
-		"Click on the container with dry soil to weigh it.",
+		"Click on 'Soil Sample' in the apparatus menu to add a soil sample to the container.",
+		"Click on 'Water' in the apparatus menu to add water to the soil filled container.",
+		"Click on the container to mix the soil with the water.",
+		"Click on 'Casagrande Apparatus' in the apparatus menu to add a casagrande cup to the workspace.", 
+		"Click on the container to move it to the casagrande apparatus as a soil pat.",
+		"Click on the casagrande apparatus to cut a groove in the soil pat.",
+		"Click on the casagrande apparatus to rotate the cup.",
 		"Click the restart button to perform the experiment again.",
 	];
 
