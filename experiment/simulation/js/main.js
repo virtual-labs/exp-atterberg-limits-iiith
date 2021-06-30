@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			{
 				objs['soil'].color = "#b86d29";
 				keys = keys.filter(function(val, index) {
-					return val != "water";
+					return val !== "water";
 				});
 			}
 
@@ -381,7 +381,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	function check(event, translate, step, flag=true)
 	{ 
-		if(translate[0] != 0 || translate[1] != 0)
+		if(translate[0] !== 0 || translate[1] !== 0)
 		{
 			return;
 		}
@@ -433,7 +433,7 @@ document.addEventListener('DOMContentLoaded', function() {
 					{
 						objs['casagrande'] = new casagrandeSide(150, 200, 0, 550, 230);
 						keys = keys.filter(function(val, index) {
-							return val != "soil";
+							return val !== "soil";
 						});
 						translate[0] = -Math.PI / (16 * 50);
 					}
@@ -565,7 +565,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			document.getElementById("main").style.pointerEvents = 'auto';
 		}
 
-		if(translate[0] != 0 || translate[1] != 0)
+		if(translate[0] !== 0 || translate[1] !== 0)
 		{
 			let temp = step;
 			const soilMoves = [5], waterMoves = [3];
@@ -573,7 +573,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			if(step === 6)
 			{
 				temp += objs['soil'].groove(translate[0]);
-				if(temp != step)
+				if(temp !== step)
 				{
 					translate[0] = 0;
 				}
