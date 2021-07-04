@@ -336,7 +336,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		};
 		keys = [];
 
-		enabled = [["container"], ["container", "soil"], ["container", "soil", "water"], ["container", "soil"], ["container", "soil", "casagrande"], ["soil", "casagrande"], ["soil", "casagrande"], ["soil", "casagrande"], ["weight", "container", "soil"], []];
+		enabled = [["container"], ["container", "soil"], ["container", "soil", "water"], ["container", "soil"], ["container", "soil", "casagrande"], ["soil", "casagrande"], ["soil", "casagrande"], ["casagrande"], []];
 		step = 0;
 		translate = [0, 0];
 		lim = [-1, -1];
