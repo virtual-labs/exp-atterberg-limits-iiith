@@ -48,19 +48,19 @@ document.addEventListener('DOMContentLoaded', function() {
 				document.getElementById("output2").innerHTML = "Mass of wet soil = " + String(wetSoilMass) + "g";
 			}
 
-			else if(step === 7 && !obj.roll(1))
+			else if(step === 7 && !obj.roll(0.5))
 			{
-				translate[0] = 5;
+				translate[1] = 5;
 
-				if(lim[0] === 410)
+				if(lim[1] === 215)
 				{
-					lim[0] = 600;
+					lim[1] = 315;
 				}
 
 				else
 				{
-					translate[0] = -5;
-					lim[0] = 410;
+					translate[1] *= -1;
+					lim[1] = 215;
 				}
 
 				return step;
@@ -186,33 +186,48 @@ document.addEventListener('DOMContentLoaded', function() {
 		};
 	};
 
-	class soilBall {
-		constructor(radius, x, y) {
-			this.radius = radius;
+	class soilThread {
+		constructor(height, width, x, y) {
+			this.height = height;
+			this.width = width;
 			this.pos = [x, y];
-			this.width = 2 * radius;
-			this.height = 2 * radius;
 		};
 
 		draw(ctx) {
 			ctx.fillStyle = "#b86d29";
 			ctx.beginPath();
-			ctx.arc(this.pos[0] + this.radius, this.pos[1] + this.radius, this.radius, 0, 2 * Math.PI);
+			ctx.rect(this.pos[0], this.pos[1], this.width, this.height);
+			ctx.closePath();
+			ctx.fill();
+
+			const e1 = [this.pos[0] + this.width, this.pos[1] + this.height], e2 = [...this.pos];
+			let gradY = (e1[1] - e2[1]) / 4, gradX = -2.5;
+
+			ctx.beginPath();
+			ctx.moveTo(e2[0], e2[1]);
+			ctx.bezierCurveTo(e2[0] += gradX, e2[1], e2[0] += gradX, e2[1] += gradY, e2[0], e2[1] += gradY);
+			ctx.bezierCurveTo(e2[0], e2[1] += gradY, e2[0] -= gradX, e2[1] += gradY, e2[0] -= gradX, e2[1]);
+
+			gradX *= -1;
+			gradY *= -1; 
+			ctx.moveTo(e1[0], e1[1]);
+			ctx.bezierCurveTo(e1[0] += gradX, e1[1], e1[0] += gradX, e1[1] += gradY, e1[0], e1[1] += gradY);
+			ctx.bezierCurveTo(e1[0], e1[1] += gradY, e1[0] -= gradX, e1[1] += gradY, e1[0] -= gradX, e1[1]);
 			ctx.closePath();
 			ctx.fill();
 		};
 
 		roll(unit) {
-			if(this.radius <= 20)
+			if(this.height <= 5)
 			{
 				return 1;
 			}
 
-			this.radius -= unit;
+			this.height -= unit;
+			this.width += 0.5 * unit;
 			return 0;
 		};
-	};
-
+	}
 	class brokenSoil {
 		constructor(height, width, x, y) {
 			this.height = height;
@@ -374,19 +389,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
 				else if(step === 6 && val === "soil")
 				{
-					const radius = 50;
+					const height = 20, width = 100;
 					hover = true;
 					if(flag)
 					{
-						objs['soil'] = new soilBall(radius, objs['plate'].pos[0] + objs['plate'].width / 2 - radius, objs['plate'].pos[1] + objs['plate'].height / 2 - radius);
+						objs['soil'] = new soilThread(height, width, objs['plate'].pos[0] + objs['plate'].width / 2 - width / 2, objs['plate'].pos[1] + objs['plate'].height / 2 - height / 2);
 					}
 				}
 
 				else if(step === 7 && val === "soil")
 				{
 					hover = true;
-					translate[0] = 5;
-					lim[0] = 600;
+					translate[1] = 5;
+					lim[1] = 315;
 				}
 			}
 		});
@@ -421,7 +436,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		"Click on the container to mix the soil with the water.",
 		"Click on 'Glass Plate' in the apparatus menu to add a glass plate to the workspace.", 
 		"Click on the soil to move it to the glass plate as a soil spread.",
-		"Click on the soil to roll it up into a ball.",
+		"Click on the soil to roll it up into a thread.",
 		"Click on the soil to roll it into a rod of diameter 3 mm. Finally, determine the water content of the obtained soil pieces. Use the following <a href=''>link</a> to learn more about water content determination.",
 		"Click the restart button to perform the experiment again.",
 	];
@@ -506,7 +521,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			document.getElementById("main").style.pointerEvents = 'auto';
 		}
 
-		if(step === 6 && objs['soil'].radius)
+		if(step === 6 && objs['soil'].height === 20)
 		{
 			step += 1;
 		}
@@ -520,9 +535,9 @@ document.addEventListener('DOMContentLoaded', function() {
 			{
 				updatePos(objs['soil'], translate);
 				temp = limCheck(objs['soil'], translate, lim, step);
-				if(temp != step && step === 7)
+				if(temp !== step && step === 7)
 				{
-					const width = 60, height = 120;
+					const width = 150, height = 20;
 					objs['soil'] = new brokenSoil(height, width, objs['plate'].pos[0] + objs['plate'].width / 2 - width / 2, objs['plate'].pos[1] + objs['plate'].height / 2 - height / 2);
 				}
 			}
