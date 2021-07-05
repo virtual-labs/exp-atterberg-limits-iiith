@@ -159,7 +159,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 			ctx.beginPath();
 			ctx.fillStyle = this.color;
-			ctx.lineWidth = lineWidth;
 			ctx.beginPath();
 	
 			ctx.moveTo(this.pos[0] + this.radius, this.pos[1]);
@@ -169,7 +168,6 @@ document.addEventListener('DOMContentLoaded', function() {
 			ctx.arcTo(this.pos[0], this.pos[1], this.pos[0] + this.width, this.pos[1], this.radius);
 			ctx.closePath();
 			ctx.fill();
-			ctx.stroke();
 		};
 	};
 
@@ -202,7 +200,6 @@ document.addEventListener('DOMContentLoaded', function() {
 			ctx.arc(this.pos[0] + this.radius, this.pos[1] + this.radius, this.radius, 0, 2 * Math.PI);
 			ctx.closePath();
 			ctx.fill();
-			ctx.stroke();
 		};
 
 		roll(unit) {
@@ -240,13 +237,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 		draw(ctx) {
 			ctx.fillStyle = "#1ca3ec";
-			ctx.lineWidth = lineWidth;
 
 			ctx.beginPath();
 			ctx.rect(this.pos[0], this.pos[1], this.width, this.height);
 			ctx.closePath();
 			ctx.fill();
-			ctx.stroke();
 		};
 
 		mixing(unit) {

@@ -141,7 +141,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 			ctx.beginPath();
 			ctx.fillStyle = this.color;
-			ctx.lineWidth = lineWidth;
 			ctx.beginPath();
 	
 			ctx.moveTo(this.pos[0] + this.radius, this.pos[1]);
@@ -151,7 +150,6 @@ document.addEventListener('DOMContentLoaded', function() {
 			ctx.arcTo(this.pos[0], this.pos[1], this.pos[0] + this.width, this.pos[1], this.radius);
 			ctx.closePath();
 			ctx.fill();
-			ctx.stroke();
 		};
 	};
 
@@ -166,7 +164,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 		draw(ctx) {
 			ctx.fillStyle = "#b86d29";
-			ctx.lineWidth = 0.001;
 			const e1 = [this.pos[0] + this.width, this.pos[1] + this.height], e2 = [...this.pos], gradX = (e1[0] - e2[0]) / 2, gradY = (e1[1] - e2[1]) / 4;
 			const inter = [((10 - this.grooveDims[0]) * e1[0] + this.grooveDims[0] * e2[0]) / 10, ((10 - this.grooveDims[0]) * e1[1] + this.grooveDims[0] * e2[1]) / 10];
 
@@ -186,7 +183,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 			ctx.closePath();
 			ctx.fill();
-			ctx.stroke();
 		};
 
 		groove(change) {
@@ -210,13 +206,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 		draw(ctx) {
 			ctx.fillStyle = "#1ca3ec";
-			ctx.lineWidth = lineWidth;
 
 			ctx.beginPath();
 			ctx.rect(this.pos[0], this.pos[1], this.width, this.height);
 			ctx.closePath();
 			ctx.fill();
-			ctx.stroke();
 		};
 
 		mixing(unit) {
@@ -252,7 +246,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		draw(ctx) {
 			// Lower horizontal part
 			const vertDivide = 0.60;
-			ctx.fillStyle = "#654321";
+			ctx.fillStyle = "#82663c";
 			ctx.lineWidth = lineWidth;
 			ctx.beginPath();
 			ctx.rect(this.pos[0], this.pos[1] + vertDivide * this.height, this.width, (1 - vertDivide) * this.height);
@@ -262,7 +256,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 			// Right vertical part
 			const horizDivide = 0.80;
-			ctx.fillStyle = "#654321";
 			ctx.beginPath();
 			ctx.rect(this.pos[0] + horizDivide * this.width, this.pos[1], (1 - horizDivide) * this.width, vertDivide * this.height);
 			ctx.closePath();
@@ -270,7 +263,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			ctx.stroke();
 
 			// Main cup part
-			ctx.fillStyle = "yellow";
+			ctx.fillStyle = "#dbfe5b";
 			const gap = 0.2, e1 = [this.pos[0] + horizDivide * this.width, this.pos[1] + gap * this.height], e2 = [this.pos[0], this.pos[1] + gap * this.height], gradX = (e1[0] - e2[0]) / -4, gradY = 60;
 			const center = [e1[0] + (1 - horizDivide) * this.width / 2, e1[1]];
 
@@ -292,7 +285,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 			// Knob
 			ctx.fillStyle = "#A9A9A9";
-			ctx.lineWidth = 0.001;
 			let radius = 0, angle = this.knobAngle; 
 
 			ctx.beginPath();
@@ -307,7 +299,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 			ctx.closePath();
 			ctx.fill();
-			ctx.stroke();
 		};
 
 		rotate(rotAng) {
