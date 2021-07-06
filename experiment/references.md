@@ -6,3 +6,6 @@
 - [Soil Classification](https://en.wikipedia.org/wiki/Soil_classification)
 - [Wikipedia - Atterberg Limits](https://en.wikipedia.org/wiki/Atterberg_limits)
 - [Answers - Atterberg Limits](https://www.answers.com/topic/atterberg-limits)
+- [EE Library - Liquid Limit](http://www.elementaryengineeringlibrary.com/civil-engineering/soil-mechanics/liquid-limit-casagrande-method)
+- [EE Library - Plastic Limit](http://www.elementaryengineeringlibrary.com/civil-engineering/soil-mechanics/plasticity-and-plastic-state-and-plastic-limit-of-soil-and-its-determination)
+- [Atterberg Limit Tests Real Lab](https://www.youtube.com/watch?v=EcXJ961qjGA&t=413s)
