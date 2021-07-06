@@ -2,7 +2,7 @@
 	"version": 2.0,
 	"questions": [
 		{
-			"question": "1. The liquid limit (LL), plastic limit (PL) and shrinkage limit (SL) of a cohesive soil satisfy the relation",
+			"question": "1. The liquid limit (LL), plastic limit (PL) and shrinkage limit (SL) of a cohesive soil satisfy which of the following relations?",
 			"answers": {
 				"a": "LL > PL > SL",
 				"b": "LL > PL < SL",
@@ -19,12 +19,12 @@
 			"correctAnswer": "a"
 		},
 		{
-			"question": "2. ",
+			"question": "2. The atterberg limits of a clay are: LL = 60%, PL = 45% and SL = 25%. The specific gravity of soil solids is 2.70 and the natural moisture content is 50%. What is its state of consistency in nature?",
 			"answers": {
-				"a": "",
-				"b": "",
-				"c": "",
-				"d": ""
+				"a": "50% firm clay",
+				"b": "55% clay",
+				"c": "40% hard clay",
+				"d": "66% medium clay"
 			},
 			"explanations": {
 				"a": "",
@@ -32,8 +32,8 @@
 				"c": "",
 				"d": ""
 			},
-			"difficulty": "beginner",
-			"correctAnswer": "b"
+			"difficulty": "advanced",
+			"correctAnswer": "d"
 		}
 	]
 }
