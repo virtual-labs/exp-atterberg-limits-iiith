@@ -430,7 +430,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		"Click on 'Container' in the apparatus menu to add a container to the workspace.",
 		"Click on 'Soil Sample' in the apparatus menu to add a soil sample to the container.",
 		"Click on 'Water' in the apparatus menu to add water to the soil filled container.",
-		"Click on the container to mix the soil with the water.",
+		"Click on the soil to mix the soil with the water.",
 		"Click on 'Glass Plate' in the apparatus menu to add a glass plate to the workspace.", 
 		"Click on the soil to move it to the glass plate as a soil spread.",
 		"Click on the soil to roll it up into a thread.",
