@@ -569,11 +569,11 @@ document.addEventListener('DOMContentLoaded', function() {
 		"Click on 'Container' in the apparatus menu to add a container to the workspace.",
 		"Click on 'Soil Sample' in the apparatus menu to add a soil sample to the container.",
 		"Click on 'Water' in the apparatus menu to add water to the soil filled container.",
-		"Click on the container to mix the soil with the water.",
+		"Click on the soil to mix the soil with the water.",
 		"Click on 'Casagrande Apparatus' in the apparatus menu to add a casagrande cup to the workspace.", 
-		"Click on the container to move it to the casagrande apparatus as a soil pat.",
+		"Click on the container to move the soil to the casagrande apparatus as a soil pat.",
 		"Click on the casagrande apparatus to cut a groove in the soil pat.",
-		"Click on the casagrande apparatus to rotate the cup. Finally, determine the water content of the soil sample. Use the following <a href=''>link</a> to learn more about water content determination.",
+		"Click on the casagrande apparatus to rotate the cup. Finally, determine the water content of the soil sample. Use the following <a href='https://sd-iiith.vlabs.ac.in/exp/water-content/'>link</a> to learn more about water content determination.",
 		"Click the restart button to perform the experiment again.",
 	];
 

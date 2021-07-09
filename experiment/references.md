@@ -9,3 +9,4 @@
 - [EE Library - Liquid Limit](http://www.elementaryengineeringlibrary.com/civil-engineering/soil-mechanics/liquid-limit-casagrande-method)
 - [EE Library - Plastic Limit](http://www.elementaryengineeringlibrary.com/civil-engineering/soil-mechanics/plasticity-and-plastic-state-and-plastic-limit-of-soil-and-its-determination)
 - [Atterberg Limit Tests Real Lab](https://www.youtube.com/watch?v=EcXJ961qjGA&t=413s)
+- [Cemm Lab - Atterberg Limits](https://cemmlab.webhost.uic.edu/Experiment%207-Atterberg%20Limits.pdf)
