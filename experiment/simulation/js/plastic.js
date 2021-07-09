@@ -8,17 +8,21 @@ document.addEventListener('DOMContentLoaded', function() {
 	restartButton.addEventListener('click', function() { restart(); });
 
 	function randomNumber(min, max) {
-		return (Math.random() * (max - min + 1) + min).toFixed(2);
+		return Number((Math.random() * (max - min + 1) + min).toFixed(2));
 	};
 
 	function logic(tableData)
 	{
-		const soilData = { 'Silt': randomNumber(22.5, 27.5), 'Sand': randomNumber(12, 16), 'Clay': randomNumber(30, 50) };
+		const waterContents = [randomNumber(13, 16), randomNumber(13, 16), randomNumber(13, 16)];
+		let avg = 0;
 		tableData.forEach(function(row, index) {
-			const ans = (Number)(soilData[row['Soil Type']]);
-			row['Water Content(%)'] = ans;
-			row['Dry Soil Mass(g)'] = ((100 * wetSoilMass) / (ans + 100)).toFixed(2);
+			row['Sample No.'] = index;
+			row['Water Content(%)'] = waterContents[index];
+			avg += waterContents[index];
 		});
+
+		avg = Number((avg / tableData.length).toFixed(2));
+		document.getElementById('output').innerHTML = "Plastic Limit = " + String(avg);
 	};
 
 	function limCheck(obj, translate, lim, step)
@@ -41,11 +45,6 @@ document.addEventListener('DOMContentLoaded', function() {
 				keys = keys.filter(function(val, index) {
 					return val !== "water";
 				});
-			}
-
-			else if(step === 4)
-			{
-				document.getElementById("output2").innerHTML = "Mass of wet soil = " + String(wetSoilMass) + "g";
 			}
 
 			else if(step === 7 && !obj.roll(0.5))
@@ -296,9 +295,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	function init()
 	{
-		document.getElementById("output1").innerHTML = "Mass of container = ___ g";
-		document.getElementById("output2").innerHTML = "Mass of wet soil = ___ g";
-
 		objs = {
 			"plate": new glassPlate(150, 390, 360, 215),
 			"container": new container(90, 120, 8, 90, 290),
@@ -319,6 +315,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	{ 
 		window.clearTimeout(tmHandle); 
 
+		document.getElementById('output').innerHTML = '';
 		document.getElementById("apparatus").style.display = 'block';
 		document.getElementById("observations").style.width = '';
 
@@ -445,9 +442,9 @@ document.addEventListener('DOMContentLoaded', function() {
 	init();
 
 	const tableData = [
-		{ "Soil Type": "Silt", "Dry Soil Mass(g)": "", "Water Content(%)": "" },
-		{ "Soil Type": "Sand", "Dry Soil Mass(g)": "", "Water Content(%)": "" },
-		{ "Soil Type": "Clay", "Dry Soil Mass(g)": "", "Water Content(%)": "" },
+		{ "Sample No.": "", "Water Content(%)": "" },
+		{ "Sample No.": "", "Water Content(%)": "" },
+		{ "Sample No.": "", "Water Content(%)": "" },
 	];
 
 	const objNames = Object.keys(objs);
@@ -460,7 +457,6 @@ document.addEventListener('DOMContentLoaded', function() {
 	});
 
 	// Input Parameters 
-	let wetSoilMass = 100; 
 	canvas.addEventListener('mousemove', function(event) {check(event, translate, step, false);});
 	canvas.addEventListener('click', function(event) {check(event, translate, step);});
 
