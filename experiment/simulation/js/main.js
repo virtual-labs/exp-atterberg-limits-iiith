@@ -7,18 +7,60 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	restartButton.addEventListener('click', function() { restart(); });
 
+	function finish(step)
+	{
+		if(!flag && step === enabled.length - 1)
+		{
+			flag = true;
+			const retTrace = logic(tableData);
+			generateTableHead(table, Object.keys(tableData[0]));
+			generateTable(table, tableData);
+			drawGraph([retTrace], ['No. of Drops(N)', 'Water Content(%)'], 'plot');
+
+			document.getElementById("main").style.display = 'none';
+			document.getElementById("graph").style.display = 'inline-block';
+			document.getElementById("apparatus").style.display = 'none';
+			document.getElementById("observations").style.width = '40%';
+			if(small)
+			{
+				document.getElementById("observations").style.width = '85%';
+			}
+		}
+	};
+
 	function randomNumber(min, max) {
-		return (Math.random() * (max - min + 1) + min).toFixed(2);
+		return Number((Math.random() * (max - min + 1) + min).toFixed(2));
+	};
+
+	function randomInt(min, max) {
+		return Number(Math.floor(randomNumber(min, max)));
 	};
 
 	function logic(tableData)
 	{
-		const soilData = { 'Silt': randomNumber(22.5, 27.5), 'Sand': randomNumber(12, 16), 'Clay': randomNumber(30, 50) };
+		const waterContents = [randomNumber(22, 23.5), randomNumber(24, 25.5), randomNumber(27, 28.5), randomNumber(30, 31.5)];
+		const drops = [randomInt(29, 33), randomInt(24, 28), randomInt(18, 22), randomInt(12, 16)];
+
+		let xVals = [], yVals = [];
 		tableData.forEach(function(row, index) {
-			const ans = (Number)(soilData[row['Soil Type']]);
-			row['Water Content(%)'] = ans;
-			row['Dry Soil Mass(g)'] = ((100 * wetSoilMass) / (ans + 100)).toFixed(2);
+			row['Sample No.'] = index;
+			row['Water Content(%)'] = waterContents[index];
+			row['No. of Drops(N)'] = drops[index];
+			xVals.push(drops[index]);
+			yVals.push(waterContents[index]);
 		});
+
+		const retTrace = trace(xVals, yVals, 'Liquid Limit Chart');
+		let liqLim;
+		retTrace['x'].forEach(function(xcoord, ix) {
+			if(xcoord === 25)
+			{
+				liqLim = retTrace['y'][ix];
+			}
+		});
+
+		document.getElementById('output').innerHTML = "Liquid Limit = " + String(liqLim);
+		return retTrace;
 	};
 
 	function limCheck(obj, translate, lim, step)
@@ -41,25 +83,6 @@ document.addEventListener('DOMContentLoaded', function() {
 				keys = keys.filter(function(val, index) {
 					return val !== "water";
 				});
-			}
-
-			else if(step === 4)
-			{
-				document.getElementById("output2").innerHTML = "Mass of wet soil = " + String(wetSoilMass) + "g";
-			}
-
-			else if(step === enabled.length - 2)
-			{
-				logic(tableData);
-				generateTableHead(table, Object.keys(tableData[0]));
-				generateTable(table, tableData);
-
-				document.getElementById("apparatus").style.display = 'none';
-				document.getElementById("observations").style.width = '40%';
-				if(small)
-				{
-					document.getElementById("observations").style.width = '85%';
-				}
 			}
 
 			return step + 1;
@@ -314,11 +337,86 @@ document.addEventListener('DOMContentLoaded', function() {
 		};
 	};
 
+	function lineFromPoints(p, q)
+	{
+		const m = (q[1] - p[1]) / (q[0] - p[0]), c = p[1] - m * p[0];
+		const xVals = math.range(p[0], q[0], -1).toArray();
+		const yVals = xVals.map(function (x) {
+			return Number((m * x + c).toFixed(2));
+		});
+
+		return [xVals, yVals];
+	};
+
+	function trace(Xaxis, Yaxis, name)
+	{
+		let xVals = [], yVals = [];
+
+		Xaxis.forEach(function(xcoord, i) {
+			let xTemp, yTemp;
+			if(i !== Xaxis.length - 1)
+			{
+				[xTemp, yTemp] = lineFromPoints([Xaxis[i], Yaxis[i]], [Xaxis[i + 1], Yaxis[i + 1]]);
+			}
+
+			xVals = xVals.concat(xTemp);
+			yVals = yVals.concat(yTemp);
+		});
+
+		const retTrace = {
+			x: xVals,
+			y: yVals,
+			name: name,
+			type: 'scatter',
+			mode: 'lines',
+		};
+
+		return retTrace;
+	};
+
+	function drawGraph(traces, text, id) {
+		try {
+			const layout = {
+				width: 400,
+				height: 400,
+				xaxis: {
+					title: {
+						text: text[0],
+						font: {
+							family: 'Courier New, monospace',
+							size: 18,
+							color: '#000000'
+						}
+					},
+					range: [0, 35],
+					dtick: 5
+				},
+				yaxis: {
+					title: {
+						text: text[1],
+						font: {
+							family: 'Courier New, monospace',
+							size: 18,
+							color: '#000000'
+						}
+					},
+					range: [0, 35],
+					dtick: 5 
+				}
+			};
+
+			const config = {responsive: true};
+			Plotly.newPlot(id, traces, layout, config);
+		}
+
+		catch (err) {
+			console.error(err);
+			alert(err);
+		}
+	};
+
 	function init()
 	{
-		document.getElementById("output1").innerHTML = "Mass of container = ___ g";
-		document.getElementById("output2").innerHTML = "Mass of wet soil = ___ g";
-
 		objs = {
 			"container": new container(90, 120, 8, 90, 290),
 			"casagrande": new casagrande(180, 210, 540, 200),
@@ -333,12 +431,15 @@ document.addEventListener('DOMContentLoaded', function() {
 		lim = [-1, -1];
 		revolts = 0;
 		rots = 0;
+		flag = false;
 	};
 
 	function restart() 
 	{ 
 		window.clearTimeout(tmHandle); 
 
+		document.getElementById("main").style.display = 'block';
+		document.getElementById("graph").style.display = 'none';
 		document.getElementById("apparatus").style.display = 'block';
 		document.getElementById("observations").style.width = '';
 
@@ -476,13 +577,14 @@ document.addEventListener('DOMContentLoaded', function() {
 		"Click the restart button to perform the experiment again.",
 	];
 
-	let step, translate, lim, objs, keys, enabled, small, revolts, rots;
+	let step, translate, lim, objs, keys, enabled, small, revolts, rots, flag;
 	init();
 
 	const tableData = [
-		{ "Soil Type": "Silt", "Dry Soil Mass(g)": "", "Water Content(%)": "" },
-		{ "Soil Type": "Sand", "Dry Soil Mass(g)": "", "Water Content(%)": "" },
-		{ "Soil Type": "Clay", "Dry Soil Mass(g)": "", "Water Content(%)": "" },
+		{ "Sample No.": "", "Water Content(%)": "", "No. of Drops(N)": "" },
+		{ "Sample No.": "", "Water Content(%)": "", "No. of Drops(N)": "" },
+		{ "Sample No.": "", "Water Content(%)": "", "No. of Drops(N)": "" },
+		{ "Sample No.": "", "Water Content(%)": "", "No. of Drops(N)": "" },
 	];
 
 	const objNames = Object.keys(objs);
@@ -495,7 +597,6 @@ document.addEventListener('DOMContentLoaded', function() {
 	});
 
 	// Input Parameters 
-	let wetSoilMass = 100; 
 	canvas.addEventListener('mousemove', function(event) {check(event, translate, step, false);});
 	canvas.addEventListener('click', function(event) {check(event, translate, step);});
 
@@ -602,6 +703,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		}
 
 		document.getElementById("procedure-message").innerHTML = msgs[step];
+		finish(step);
 		tmHandle = window.setTimeout(draw, 1000 / fps);
 	};
 

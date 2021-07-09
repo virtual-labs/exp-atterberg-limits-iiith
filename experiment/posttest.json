@@ -10,7 +10,7 @@
 				"d": "LL < PL > SL"
 			},
 			"explanations": {
-				"a": "",
+				"a": "Liquid limit will have more water content and the state of soil changes from plastic state to liquid state. Similarly, at plastic limit the state of soil changes from semi-solid state to plastic state where there is considerable shear strength and the soil offers considerable resistance to flow. As the water content of a dry soil is increased, the soil state changes from solid state to semi-solid state and this limit is called shrinkage limit. Hence, liquid limit > plastic limit > shrinkage limit.",
 				"b": "",
 				"c": "",
 				"d": ""
@@ -30,7 +30,7 @@
 				"a": "",
 				"b": "",
 				"c": "",
-				"d": ""
+				"d": "This is derived from the plasticity index vs liquid limit graph."
 			},
 			"difficulty": "advanced",
 			"correctAnswer": "d"

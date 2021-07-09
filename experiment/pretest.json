@@ -27,7 +27,7 @@
 				"d": "None of the above"
 			},
 			"explanations": {
-				"a": "",
+				"a": "Liquid limit and plasticity index represent the state of soil that begins to behave like a liquid and as a plastic state respectively. The state between liquid limit and plastic limit represents the firmness of the soil.",
 				"b": "",
 				"c": "",
 				"d": ""
@@ -38,14 +38,14 @@
 		{
 			"question": "3. The laboratory test results of a soil sample are given below: Percentage finer than 4.75 mm = 60%, Percentage finer than 0.075 mm = 30%, Liquid Limit = 35%, Plastic Limit = 27%. The soil classification is ____.",
 			"answers": {
-				"a": "GM",
-				"b": "SM",
-				"c": "GC",
-				"d": "ML-MI"
+				"a": "GM (Gravel-Silt)",
+				"b": "SM (Silty Sand)",
+				"c": "GC (Clayey Gravel)",
+				"d": "ML-MI (Low Compressible Silt - Intermediate Compressible Silt)"
 			},
 			"explanations": {
 				"a": "",
-				"b": "",
+				"b": "Plasticity Index = LL-PL = 8%. Fine grained soils are those having 50% or more pass through 75 sieve (0.075 mm). It is designated as sand (S) if 50% or more pass through 4.75 mm sieve otherwise designated as gravel (G). Since the percentage finer than 4.75 mm is 60%, it is designated as sand (S). Further, percentage finer than 75 is 30 which is more than 12%, observe the liquid limit and plastic limit on the plasticity chart. Plasticity index corresponding to A-line, The point corresponding to and lies below A- line on the Plasticity chart. It is designated as M or O. Therefore, the soil is classified as SM.",
 				"c": "",
 				"d": ""
 			},
