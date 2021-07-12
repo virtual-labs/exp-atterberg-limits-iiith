@@ -10,13 +10,13 @@
 	<body class="page">
 		<div class="v-tabs">
 			<ul>
-				<li class="is-active">
-					<a href=''>
+				<li>
+					<a href='./index.html'>
 						<span>Liquid Limit</span>
 					</a>
 				</li>
-				<li>
-					<a href='./plastic.html'>
+				<li class="is-active">
+					<a href=''>
 						<span>Plastic Limit</span>
 					</a>
 				</li>
@@ -40,7 +40,7 @@
 					<a class="v-datalist-row v-bold" id="container">Container</a>
 					<a class="v-datalist-row v-bold" id="soil">Soil Sample</a>
 					<a class="v-datalist-row v-bold" id="water">Water</a>
-					<a class="v-datalist-row v-bold" id="casagrande">Casagrande Apparatus</a>
+					<a class="v-datalist-row v-bold" id="plate">Glass Plate</a>
 				</div>
 			</div>
 
@@ -53,16 +53,12 @@
 							</table>
 						</div>
 					</div>
+					<div class="v-datalist-row v-bold" id="output"></div>
 				</div>
 			</div>
 
 			<div class="column has-text-centered is-6-desktop is-10-tablet is-10-mobile simulation">
 				<canvas id="main" class="v-canvas-container"></canvas>
-				<div class="v-datalist-container graph" id='graph'>
-					<div class="v-datalist-title">Graph Observations</div>
-					<div class="plot" id="plot"></div>
-					<div class="v-datalist-row v-bold" id="output"></div>
-				</div>
 			</div>
 		</div>
 
@@ -73,8 +69,7 @@
 		</div>
 
 		<script src="https://unpkg.com/mathjs@9.2.0/lib/browser/math.js"></script>
-		<script src="https://cdn.plot.ly/plotly-1.47.4.min.js"></script>
 		<script src="./js/data.json"></script>
-		<script src="./js/main.js"></script>
+		<script src="./js/plastic.js"></script>
 	</body>
 </html>

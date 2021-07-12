@@ -7,60 +7,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	restartButton.addEventListener('click', function() { restart(); });
 
-	function finish(step)
-	{
-		if(!flag && step === enabled.length - 1)
-		{
-			flag = true;
-			const retTrace = logic(tableData);
-			generateTableHead(table, Object.keys(tableData[0]));
-			generateTable(table, tableData);
-			drawGraph([retTrace], ['No. of Drops(N)', 'Water Content(%)'], 'plot');
-
-			document.getElementById("main").style.display = 'none';
-			document.getElementById("graph").style.display = 'inline-block';
-			document.getElementById("apparatus").style.display = 'none';
-			document.getElementById("observations").style.width = '40%';
-			if(small)
-			{
-				document.getElementById("observations").style.width = '85%';
-			}
-		}
-	};
-
 	function randomNumber(min, max) {
 		return Number((Math.random() * (max - min + 1) + min).toFixed(2));
 	};
 
-	function randomInt(min, max) {
-		return Number(Math.floor(randomNumber(min, max)));
-	};
-
 	function logic(tableData)
 	{
-		const waterContents = [randomNumber(22, 23.5), randomNumber(24, 25.5), randomNumber(27, 28.5), randomNumber(30, 31.5)];
-		const drops = [randomInt(29, 33), randomInt(24, 28), randomInt(18, 22), randomInt(12, 16)];
-
-		let xVals = [], yVals = [];
+		const waterContents = [randomNumber(13, 16), randomNumber(13, 16), randomNumber(13, 16)];
+		let avg = 0;
 		tableData.forEach(function(row, index) {
 			row['Sample No.'] = index;
 			row['Water Content(%)'] = waterContents[index];
-			row['No. of Drops(N)'] = drops[index];
-			xVals.push(drops[index]);
-			yVals.push(waterContents[index]);
+			avg += waterContents[index];
 		});
 
-		const retTrace = trace(xVals, yVals, 'Liquid Limit Chart');
-		let liqLim;
-		retTrace['x'].forEach(function(xcoord, ix) {
-			if(xcoord === 25)
-			{
-				liqLim = retTrace['y'][ix];
-			}
-		});
-
-		document.getElementById('output').innerHTML = "Liquid Limit = " + String(liqLim);
-		return retTrace;
+		avg = Number((avg / tableData.length).toFixed(2));
+		document.getElementById('output').innerHTML = "Plastic Limit = " + String(avg);
 	};
 
 	function limCheck(obj, translate, lim, step)
@@ -83,6 +45,38 @@ document.addEventListener('DOMContentLoaded', function() {
 				keys = keys.filter(function(val, index) {
 					return val !== "water";
 				});
+			}
+
+			else if(step === 7 && !obj.roll(0.5))
+			{
+				translate[1] = 5;
+
+				if(lim[1] === 215)
+				{
+					lim[1] = 315;
+				}
+
+				else
+				{
+					translate[1] *= -1;
+					lim[1] = 215;
+				}
+
+				return step;
+			}
+
+			else if(step === enabled.length - 2)
+			{
+				logic(tableData);
+				generateTableHead(table, Object.keys(tableData[0]));
+				generateTable(table, tableData);
+
+				document.getElementById("apparatus").style.display = 'none';
+				document.getElementById("observations").style.width = '40%';
+				if(small)
+				{
+					document.getElementById("observations").style.width = '85%';
+				}
 			}
 
 			return step + 1;
@@ -176,47 +170,75 @@ document.addEventListener('DOMContentLoaded', function() {
 		};
 	};
 
-	class soilPat {
-		constructor(height, width, angle, x, y) {
-			this.width = width; 
+	class soilSpread {
+		constructor(height, width, x, y) {
 			this.height = height;
-			this.angle = angle;
+			this.width = width;
 			this.pos = [x, y];
-			this.grooveDims = [0, 0];
+			this.img = new Image();
+			this.img.src = './images/soil-spread.png';
+			this.img.onload = () => { ctx.drawImage(this.img, this.pos[0], this.pos[1], this.width, this.height); };
+		};
+
+		draw(ctx) {
+			ctx.drawImage(this.img, this.pos[0], this.pos[1], this.width, this.height);
+		};
+	};
+
+	class soilThread {
+		constructor(height, width, x, y) {
+			this.height = height;
+			this.width = width;
+			this.pos = [x, y];
 		};
 
 		draw(ctx) {
 			ctx.fillStyle = data.colors.wetSoilBrown;
-			const e1 = [this.pos[0] + this.width, this.pos[1] + this.height], e2 = [...this.pos], gradX = (e1[0] - e2[0]) / 2, gradY = (e1[1] - e2[1]) / 4;
-			const inter = [((10 - this.grooveDims[0]) * e1[0] + this.grooveDims[0] * e2[0]) / 10, ((10 - this.grooveDims[0]) * e1[1] + this.grooveDims[0] * e2[1]) / 10];
+			ctx.beginPath();
+			ctx.rect(this.pos[0], this.pos[1], this.width, this.height);
+			ctx.closePath();
+			ctx.fill();
+
+			const e1 = [this.pos[0] + this.width, this.pos[1] + this.height], e2 = [...this.pos];
+			let gradY = (e1[1] - e2[1]) / 4, gradX = -2.5;
 
 			ctx.beginPath();
 			ctx.moveTo(e2[0], e2[1]);
-			ctx.bezierCurveTo(e2[0] - 3 * gradX, e2[1] + gradY, e1[0] - 2.5 * gradX, e1[1] + gradY, e1[0], e1[1]);
-			ctx.lineTo(e1[0] - this.grooveDims[1] / 2, e1[1]);
-			ctx.lineTo(inter[0] - this.grooveDims[1] / 2, inter[1]);
-			ctx.lineTo(inter[0] + this.grooveDims[1] / 2, inter[1]);
-			ctx.lineTo(e2[0], e2[1]);
+			ctx.bezierCurveTo(e2[0] += gradX, e2[1], e2[0] += gradX, e2[1] += gradY, e2[0], e2[1] += gradY);
+			ctx.bezierCurveTo(e2[0], e2[1] += gradY, e2[0] -= gradX, e2[1] += gradY, e2[0] -= gradX, e2[1]);
 
+			gradX *= -1;
+			gradY *= -1; 
 			ctx.moveTo(e1[0], e1[1]);
-			ctx.bezierCurveTo(e1[0] + 3.5 * gradX, e1[1] - gradY, e2[0] + 2 * gradX, e2[1] - gradY, e2[0], e2[1]);
-			ctx.lineTo(inter[0], inter[1]);
-			ctx.lineTo(inter[0] + this.grooveDims[1] / 2, inter[1]);
-			ctx.lineTo(e1[0] + this.grooveDims[1] / 2, e1[1]);
-
+			ctx.bezierCurveTo(e1[0] += gradX, e1[1], e1[0] += gradX, e1[1] += gradY, e1[0], e1[1] += gradY);
+			ctx.bezierCurveTo(e1[0], e1[1] += gradY, e1[0] -= gradX, e1[1] += gradY, e1[0] -= gradX, e1[1]);
 			ctx.closePath();
 			ctx.fill();
 		};
 
-		groove(change) {
-			this.grooveDims[0] += change;
-
-			if(this.grooveDims[0] >= 10)
+		roll(unit) {
+			if(this.height <= 5)
 			{
 				return 1;
 			}
 
+			this.height -= unit;
+			this.width += 0.5 * unit;
 			return 0;
+		};
+	}
+	class brokenSoil {
+		constructor(height, width, x, y) {
+			this.height = height;
+			this.width = width;
+			this.pos = [x, y];
+			this.img = new Image();
+			this.img.src = './images/broken-soil.png';
+			this.img.onload = () => { ctx.drawImage(this.img, this.pos[0], this.pos[1], this.width, this.height); };
+		};
+
+		draw(ctx) {
+			ctx.drawImage(this.img, this.pos[0], this.pos[1], this.width, this.height);
 		};
 	};
 
@@ -242,204 +264,58 @@ document.addEventListener('DOMContentLoaded', function() {
 		};
 	};
 
-	class casagrande {
+	class glassPlate {
 		constructor(height, width, x, y) {
 			this.height = height;
 			this.width = width;
 			this.pos = [x, y];
-			this.img = new Image();
-			this.img.src = './images/casagrande.png';
-			this.img.onload = () => { ctx.drawImage(this.img, this.pos[0], this.pos[1], this.width, this.height); }; 
 		};
 
-		draw(ctx) {
-			ctx.drawImage(this.img, this.pos[0], this.pos[1], this.width, this.height);
-		};
-	};
+		draw(ctx)
+		{
+			const slant = 30, thickness = 15;
+			ctx.fillStyle = data.colors.lightBlue;
 
-	class casagrandeSide {
-		constructor(height, width, angle, x, y) {
-			this.height = height;
-			this.width = width; 
-			this.angle = angle; 
-			this.pos = [x, y];
-			this.knobAngle = angle;
-		};
-
-		draw(ctx) {
-			// Lower horizontal part
-			const vertDivide = 0.60;
-			ctx.fillStyle = data.colors.brown;
-			ctx.lineWidth = lineWidth;
 			ctx.beginPath();
-			ctx.rect(this.pos[0], this.pos[1] + vertDivide * this.height, this.width, (1 - vertDivide) * this.height);
+			ctx.moveTo(this.pos[0], this.pos[1] + this.height);
+			ctx.lineTo(this.pos[0] + slant , this.pos[1]);
+			ctx.lineTo(this.pos[0] + this.width - slant, this.pos[1]);
+			ctx.lineTo(this.pos[0] + this.width, this.pos[1] + this.height);
 			ctx.closePath();
 			ctx.fill();
 			ctx.stroke();
 
-			// Right vertical part
-			const horizDivide = 0.80;
 			ctx.beginPath();
-			ctx.rect(this.pos[0] + horizDivide * this.width, this.pos[1], (1 - horizDivide) * this.width, vertDivide * this.height);
+			ctx.rect(this.pos[0], this.pos[1] + this.height, this.width, thickness);
 			ctx.closePath();
 			ctx.fill();
 			ctx.stroke();
-
-			// Main cup part
-			ctx.fillStyle = data.colors.yellow;
-			const gap = 0.2, e1 = [this.pos[0] + horizDivide * this.width, this.pos[1] + gap * this.height], e2 = [this.pos[0], this.pos[1] + gap * this.height], gradX = (e1[0] - e2[0]) / -4, gradY = 60;
-			const center = [e1[0] + (1 - horizDivide) * this.width / 2, e1[1]];
-
-			ctx.translate(e1[0], e1[1]);
-			ctx.rotate(this.angle);
-			e2[0] -= e1[0];
-			e2[1] -= e1[1];
-			e1[0] = 0;
-			e1[1] = 0;
-
-			ctx.beginPath();
-			ctx.moveTo(e2[0], e2[1]);
-			ctx.lineTo(e1[0], e1[1]);
-			ctx.bezierCurveTo(e1[0], e1[1] + 0.7 * gradY, e2[0], e2[1] + gradY, e2[0], e2[1]);
-			ctx.closePath();
-			ctx.fill();
-			ctx.stroke();
-			ctx.setTransform(1, 0, 0, 1, 0, 0);
-
-			// Knob
-			ctx.fillStyle = data.colors.gray;
-			let radius = 0, angle = this.knobAngle; 
-
-			ctx.beginPath();
-			ctx.moveTo(center[0], center[1]);
-			for (let n = 0; n < 75; n++) {
-				radius += 0.25;
-				angle += Math.PI * 2 / 50;
-				const x = center[0] + radius * Math.cos(angle), y = center[1] + radius * Math.sin(angle);
-				ctx.lineTo(x, y);
-			}
-			ctx.lineTo(center[0], center[1]);
-
-			ctx.closePath();
-			ctx.fill();
 		};
-
-		rotate(rotAng) {
-			this.angle += rotAng;
-			this.knobAngle += math.abs(rotAng * 16); 
-
-			if(this.angle < -Math.PI / 16 || this.angle >= 0)
-			{
-				return -1;
-			}
-
-			return 1;
-		};
-	};
-
-	function lineFromPoints(p, q)
-	{
-		const m = (q[1] - p[1]) / (q[0] - p[0]), c = p[1] - m * p[0];
-		const xVals = math.range(p[0], q[0], -1).toArray();
-		const yVals = xVals.map(function (x) {
-			return Number((m * x + c).toFixed(2));
-		});
-
-		return [xVals, yVals];
-	};
-
-	function trace(Xaxis, Yaxis, name)
-	{
-		let xVals = [], yVals = [];
-
-		Xaxis.forEach(function(xcoord, i) {
-			let xTemp, yTemp;
-			if(i !== Xaxis.length - 1)
-			{
-				[xTemp, yTemp] = lineFromPoints([Xaxis[i], Yaxis[i]], [Xaxis[i + 1], Yaxis[i + 1]]);
-			}
-
-			xVals = xVals.concat(xTemp);
-			yVals = yVals.concat(yTemp);
-		});
-
-		const retTrace = {
-			x: xVals,
-			y: yVals,
-			name: name,
-			type: 'scatter',
-			mode: 'lines',
-		};
-
-		return retTrace;
-	};
-
-	function drawGraph(traces, text, id) {
-		try {
-			const layout = {
-				width: 400,
-				height: 400,
-				xaxis: {
-					title: {
-						text: text[0],
-						font: {
-							family: 'Courier New, monospace',
-							size: 18,
-							color: '#000000'
-						}
-					},
-					range: [0, 35],
-					dtick: 5
-				},
-				yaxis: {
-					title: {
-						text: text[1],
-						font: {
-							family: 'Courier New, monospace',
-							size: 18,
-							color: '#000000'
-						}
-					},
-					range: [0, 35],
-					dtick: 5 
-				}
-			};
-
-			const config = {responsive: true};
-			Plotly.newPlot(id, traces, layout, config);
-		}
-
-		catch (err) {
-			console.error(err);
-			alert(err);
-		}
 	};
 
 	function init()
 	{
 		objs = {
+			"plate": new glassPlate(150, 390, 360, 215),
 			"container": new container(90, 120, 8, 90, 290),
-			"casagrande": new casagrande(180, 210, 540, 200),
 			"water": new water(30, 120, 90, 320),
 			"soil": new soil(40, 120, 8, 90, 340),
 		};
 		keys = [];
 
-		enabled = [["container"], ["container", "soil"], ["container", "soil", "water"], ["container", "soil"], ["container", "soil", "casagrande"], ["soil", "casagrande"], ["soil", "casagrande"], ["casagrande"], []];
+		enabled = [["container"], ["container", "soil"], ["container", "soil", "water"], ["container", "soil"], ["container", "soil", "plate"], ["container", "soil", "plate"], ["container", "soil", "plate"], ["container", "soil", "plate"], []];
 		step = 0;
 		translate = [0, 0];
 		lim = [-1, -1];
 		revolts = 0;
 		rots = 0;
-		flag = false;
 	};
 
 	function restart() 
 	{ 
 		window.clearTimeout(tmHandle); 
 
-		document.getElementById("main").style.display = 'block';
-		document.getElementById("graph").style.display = 'none';
+		document.getElementById('output').innerHTML = '';
 		document.getElementById("apparatus").style.display = 'block';
 		document.getElementById("observations").style.width = '';
 
@@ -499,45 +375,30 @@ document.addEventListener('DOMContentLoaded', function() {
 					if(flag)
 					{
 						const center = [objs['soil'].pos[0] + objs['soil'].width / 2, objs['soil'].pos[1] + objs['soil'].height / 2];
-						objs['soil'] = new soilPat(-55, 40, 60 * Math.PI / 180, center[0], center[1]);
+						objs['soil'] = new soilSpread(objs['soil'].height * 2, objs['soil'].width * 2, objs['soil'].pos[0], objs['soil'].pos[1]);
 					}
 
 					translate[0] = 5;
 					translate[1] = -5;
-					lim[0] = 605;
-					lim[1] = 305;
+					lim[0] = objs['plate'].pos[0] + objs['plate'].width / 2 - objs['soil'].width / 2;
+					lim[1] = objs['plate'].pos[1] + objs['plate'].height/ 2 - objs['soil'].height / 2;
 				}
 
-				else if(step === 6 && val === "casagrande")
+				else if(step === 6 && val === "soil")
 				{
-					hover = true;
-					translate[0] = 0.5;
-					if(flag)
-					{
-						objs['soil'].grooveDims[1] = 10;
-					}
-				}
-
-				else if(step === 7 && val === "casagrande")
-				{
+					const height = 20, width = 100;
 					hover = true;
 					if(flag)
 					{
-						objs['casagrande'] = new casagrandeSide(150, 200, 0, 550, 230);
-						keys = keys.filter(function(val, index) {
-							return val !== "soil";
-						});
-						translate[0] = -Math.PI / (16 * 50);
+						objs['soil'] = new soilThread(height, width, objs['plate'].pos[0] + objs['plate'].width / 2 - width / 2, objs['plate'].pos[1] + objs['plate'].height / 2 - height / 2);
 					}
 				}
 
-				else if(step === 8 && val === "container")
+				else if(step === 7 && val === "soil")
 				{
 					hover = true;
-					translate[0] = -5;
-					translate[1] = -5;
-					lim[0] = 135;
-					lim[1] = 110;
+					translate[1] = 5;
+					lim[1] = 315;
 				}
 			}
 		});
@@ -570,21 +431,20 @@ document.addEventListener('DOMContentLoaded', function() {
 		"Click on 'Soil Sample' in the apparatus menu to add a soil sample to the container.",
 		"Click on 'Water' in the apparatus menu to add water to the soil filled container.",
 		"Click on the soil to mix the soil with the water.",
-		"Click on 'Casagrande Apparatus' in the apparatus menu to add a casagrande cup to the workspace.", 
-		"Click on the container to move the soil to the casagrande apparatus as a soil pat.",
-		"Click on the casagrande apparatus to cut a groove in the soil pat.",
-		"Click on the casagrande apparatus to rotate the cup. Finally, determine the water content of the soil sample. Use the following <a href='https://sd-iiith.vlabs.ac.in/exp/water-content/'>link</a> to learn more about water content determination.",
+		"Click on 'Glass Plate' in the apparatus menu to add a glass plate to the workspace.", 
+		"Click on the soil to move it to the glass plate as a soil spread.",
+		"Click on the soil to roll it up into a thread.",
+		"Click on the soil to roll it into a rod of diameter 3 mm. Finally, determine the water content of the obtained soil pieces. Use the following <a href=''>link</a> to learn more about water content determination.",
 		"Click the restart button to perform the experiment again.",
 	];
 
-	let step, translate, lim, objs, keys, enabled, small, revolts, rots, flag;
+	let step, translate, lim, objs, keys, enabled, small, revolts, rots;
 	init();
 
 	const tableData = [
-		{ "Sample No.": "", "Water Content(%)": "", "No. of Drops(N)": "" },
-		{ "Sample No.": "", "Water Content(%)": "", "No. of Drops(N)": "" },
-		{ "Sample No.": "", "Water Content(%)": "", "No. of Drops(N)": "" },
-		{ "Sample No.": "", "Water Content(%)": "", "No. of Drops(N)": "" },
+		{ "Sample No.": "", "Water Content(%)": "" },
+		{ "Sample No.": "", "Water Content(%)": "" },
+		{ "Sample No.": "", "Water Content(%)": "" },
 	];
 
 	const objNames = Object.keys(objs);
@@ -657,40 +517,25 @@ document.addEventListener('DOMContentLoaded', function() {
 			document.getElementById("main").style.pointerEvents = 'auto';
 		}
 
+		if(step === 6 && objs['soil'].height === 20)
+		{
+			step += 1;
+		}
+
 		if(translate[0] !== 0 || translate[1] !== 0)
 		{
 			let temp = step;
-			const soilMoves = [5], waterMoves = [3];
+			const soilMoves = [5, 7], waterMoves = [3];
 
-			if(step === 6)
-			{
-				temp += objs['soil'].groove(translate[0]);
-				if(temp !== step)
-				{
-					translate[0] = 0;
-				}
-			}
-
-			else if(step === 7)
-			{
-				translate[0] *= objs['casagrande'].rotate(translate[0]);
-				rots = (rots + 1) % (2 * 50);
-				if(rots === 0)
-				{
-					revolts += 1;
-					if(revolts >= 10)
-					{
-						translate[0] = 0;
-						revolts = 0;
-						temp += 1;
-					}
-				}
-			}
-
-			else if(soilMoves.includes(step))
+			if(soilMoves.includes(step))
 			{
 				updatePos(objs['soil'], translate);
 				temp = limCheck(objs['soil'], translate, lim, step);
+				if(temp !== step && step === 7)
+				{
+					const width = 150, height = 20;
+					objs['soil'] = new brokenSoil(height, width, objs['plate'].pos[0] + objs['plate'].width / 2 - width / 2, objs['plate'].pos[1] + objs['plate'].height / 2 - height / 2);
+				}
 			}
 
 			else if(waterMoves.includes(step))
@@ -703,7 +548,6 @@ document.addEventListener('DOMContentLoaded', function() {
 		}
 
 		document.getElementById("procedure-message").innerHTML = msgs[step];
-		finish(step);
 		tmHandle = window.setTimeout(draw, 1000 / fps);
 	};
 
