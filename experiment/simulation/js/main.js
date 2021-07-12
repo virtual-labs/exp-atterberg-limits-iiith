@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		{
 			if(step === 3)
 			{
-				objs['soil'].color = "#b86d29";
+				objs['soil'].color = data.colors.wetSoilBrown;
 				keys = keys.filter(function(val, index) {
 					return val !== "water";
 				});
@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			this.width = width;
 			this.radius = radius;
 			this.pos = [x, y];
-			this.color = "#654321";
+			this.color = data.colors.soilBrown;
 		};
 
 		draw(ctx) {
@@ -186,7 +186,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		};
 
 		draw(ctx) {
-			ctx.fillStyle = "#b86d29";
+			ctx.fillStyle = data.colors.wetSoilBrown;
 			const e1 = [this.pos[0] + this.width, this.pos[1] + this.height], e2 = [...this.pos], gradX = (e1[0] - e2[0]) / 2, gradY = (e1[1] - e2[1]) / 4;
 			const inter = [((10 - this.grooveDims[0]) * e1[0] + this.grooveDims[0] * e2[0]) / 10, ((10 - this.grooveDims[0]) * e1[1] + this.grooveDims[0] * e2[1]) / 10];
 
@@ -228,7 +228,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		};
 
 		draw(ctx) {
-			ctx.fillStyle = "#1ca3ec";
+			ctx.fillStyle = data.colors.blue;
 
 			ctx.beginPath();
 			ctx.rect(this.pos[0], this.pos[1], this.width, this.height);
@@ -269,7 +269,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		draw(ctx) {
 			// Lower horizontal part
 			const vertDivide = 0.60;
-			ctx.fillStyle = "#82663c";
+			ctx.fillStyle = data.colors.brown;
 			ctx.lineWidth = lineWidth;
 			ctx.beginPath();
 			ctx.rect(this.pos[0], this.pos[1] + vertDivide * this.height, this.width, (1 - vertDivide) * this.height);
@@ -286,7 +286,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			ctx.stroke();
 
 			// Main cup part
-			ctx.fillStyle = "#dbfe5b";
+			ctx.fillStyle = data.colors.yellow;
 			const gap = 0.2, e1 = [this.pos[0] + horizDivide * this.width, this.pos[1] + gap * this.height], e2 = [this.pos[0], this.pos[1] + gap * this.height], gradX = (e1[0] - e2[0]) / -4, gradY = 60;
 			const center = [e1[0] + (1 - horizDivide) * this.width / 2, e1[1]];
 
@@ -307,7 +307,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			ctx.setTransform(1, 0, 0, 1, 0, 0);
 
 			// Knob
-			ctx.fillStyle = "#A9A9A9";
+			ctx.fillStyle = data.colors.gray;
 			let radius = 0, angle = this.knobAngle; 
 
 			ctx.beginPath();
@@ -564,7 +564,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	canvas.style = "border:3px solid";
 	const ctx = canvas.getContext("2d");
 
-	const fill = "#A9A9A9", border = "black", lineWidth = 1.5, fps = 150;
+	const border = "black", lineWidth = 1.5, fps = 150;
 	const msgs = [
 		"Click on 'Container' in the apparatus menu to add a container to the workspace.",
 		"Click on 'Soil Sample' in the apparatus menu to add a soil sample to the container.",

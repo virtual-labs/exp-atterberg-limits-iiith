@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		{
 			if(step === 3)
 			{
-				objs['soil'].color = "#b86d29";
+				objs['soil'].color = data.colors.wetSoilBrown;
 				keys = keys.filter(function(val, index) {
 					return val !== "water";
 				});
@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			this.width = width;
 			this.radius = radius;
 			this.pos = [x, y];
-			this.color = "#654321";
+			this.color = data.colors.soilBrown;
 		};
 
 		draw(ctx) {
@@ -193,7 +193,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		};
 
 		draw(ctx) {
-			ctx.fillStyle = "#b86d29";
+			ctx.fillStyle = data.colors.wetSoilBrown;
 			ctx.beginPath();
 			ctx.rect(this.pos[0], this.pos[1], this.width, this.height);
 			ctx.closePath();
@@ -250,7 +250,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		};
 
 		draw(ctx) {
-			ctx.fillStyle = "#1ca3ec";
+			ctx.fillStyle = data.colors.blue;
 
 			ctx.beginPath();
 			ctx.rect(this.pos[0], this.pos[1], this.width, this.height);
@@ -274,7 +274,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		draw(ctx)
 		{
 			const slant = 30, thickness = 15;
-			ctx.fillStyle = "#add8ec";
+			ctx.fillStyle = data.colors.lightBlue;
 
 			ctx.beginPath();
 			ctx.moveTo(this.pos[0], this.pos[1] + this.height);
@@ -425,7 +425,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	canvas.style = "border:3px solid";
 	const ctx = canvas.getContext("2d");
 
-	const fill = "#A9A9A9", border = "black", lineWidth = 1.5, fps = 150;
+	const border = "black", lineWidth = 1.5, fps = 150;
 	const msgs = [
 		"Click on 'Container' in the apparatus menu to add a container to the workspace.",
 		"Click on 'Soil Sample' in the apparatus menu to add a soil sample to the container.",
