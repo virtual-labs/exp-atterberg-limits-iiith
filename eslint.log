@@ -1,0 +1,48 @@
+
+/home/runner/work/exp-atterberg-limits-iiith/exp-atterberg-limits-iiith/experiment/simulation/js/main.js
+    5:9   warning  'instrMsg' is assigned a value but never used  no-unused-vars
+   85:30  warning  'data' is not defined                          no-undef
+   86:43  warning  'index' is defined but never used              no-unused-vars
+  177:20  warning  'data' is not defined                          no-undef
+  237:23  warning  'data' is not defined                          no-undef
+  298:23  warning  'data' is not defined                          no-undef
+  353:23  warning  'data' is not defined                          no-undef
+  380:23  warning  'data' is not defined                          no-undef
+  387:9   warning  'gradX' is assigned a value but never used     no-unused-vars
+  415:23  warning  'data' is not defined                          no-undef
+  436:25  warning  'math' is not defined                          no-undef
+  449:19  warning  'math' is not defined                          no-undef
+  517:7   warning  'Plotly' is not defined                        no-undef
+  569:33  warning  'ind' is defined but never used                no-unused-vars
+  578:37  warning  'ind' is defined but never used                no-unused-vars
+  580:51  warning  'i' is defined but never used                  no-unused-vars
+  601:33  warning  'ind' is defined but never used                no-unused-vars
+  642:47  warning  'index' is defined but never used              no-unused-vars
+  691:9   warning  'border' is assigned a value but never used    no-unused-vars
+  717:36  warning  'ind' is defined but never used                no-unused-vars
+  719:45  warning  'event' is defined but never used              no-unused-vars
+  762:38  warning  'ind' is defined but never used                no-unused-vars
+
+/home/runner/work/exp-atterberg-limits-iiith/exp-atterberg-limits-iiith/experiment/simulation/js/plastic.js
+    5:9   warning  'instrMsg' is assigned a value but never used   no-unused-vars
+   44:30  warning  'data' is not defined                           no-undef
+   45:43  warning  'index' is defined but never used               no-unused-vars
+  157:20  warning  'data' is not defined                           no-undef
+  244:23  warning  'data' is not defined                           no-undef
+  344:23  warning  'data' is not defined                           no-undef
+  368:23  warning  'data' is not defined                           no-undef
+  430:33  warning  'ind' is defined but never used                 no-unused-vars
+  439:37  warning  'ind' is defined but never used                 no-unused-vars
+  441:51  warning  'i' is defined but never used                   no-unused-vars
+  462:33  warning  'ind' is defined but never used                 no-unused-vars
+  476:19  warning  'center' is assigned a value but never used     no-unused-vars
+  552:9   warning  'border' is assigned a value but never used     no-unused-vars
+  553:5   warning  'lineWidth' is assigned a value but never used  no-unused-vars
+  567:57  warning  'revolts' is assigned a value but never used    no-unused-vars
+  567:66  warning  'rots' is assigned a value but never used       no-unused-vars
+  577:36  warning  'ind' is defined but never used                 no-unused-vars
+  579:45  warning  'event' is defined but never used               no-unused-vars
+  622:38  warning  'ind' is defined but never used                 no-unused-vars
+
+✖ 41 problems (0 errors, 41 warnings)
+
