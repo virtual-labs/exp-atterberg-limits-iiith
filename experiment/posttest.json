@@ -1,39 +1,158 @@
 {
-	"version": 2.0,
-	"questions": [
-		{
-			"question": "1. The liquid limit (LL), plastic limit (PL) and shrinkage limit (SL) of a cohesive soil satisfy which of the following relations?",
-			"answers": {
-				"a": "LL > PL > SL",
-				"b": "LL > PL < SL",
-				"c": "LL < PL < SL",
-				"d": "LL < PL > SL"
-			},
-			"explanations": {
-				"a": "Liquid limit will have more water content and the state of soil changes from plastic state to liquid state. Similarly, at plastic limit the state of soil changes from semi-solid state to plastic state where there is considerable shear strength and the soil offers considerable resistance to flow. As the water content of a dry soil is increased, the soil state changes from solid state to semi-solid state and this limit is called shrinkage limit. Hence, liquid limit > plastic limit > shrinkage limit.",
-				"b": "The plastic limit cannot be less than the shrinkage limit. At plastic limit the state of soil changes from semi-solid state to plastic state where there is considerable shear strength and the soil offers considerable resistance to flow. As the water content of a dry soil is increased, the soil state changes from solid state to semi-solid state and this limit is called shrinkage limit.",
-				"c": "The plastic limit cannot be less than the shrinkage limit. At plastic limit the state of soil changes from semi-solid state to plastic state where there is considerable shear strength and the soil offers considerable resistance to flow. As the water content of a dry soil is increased, the soil state changes from solid state to semi-solid state and this limit is called shrinkage limit.",
-				"d": "The liquid limit cannot be less than the plastic limit. Liquid limit will have more water content and the state of soil changes from plastic state to liquid state. Similarly, at plastic limit the state of soil changes from semi-solid state to plastic state where there is considerable shear strength and the soil offers considerable resistance to flow. "
-			},
-			"difficulty": "beginner",
-			"correctAnswer": "a"
-		},
-		{
-			"question": "2. The atterberg limits of a clay are: LL = 60%, PL = 45% and SL = 25%. The specific gravity of soil solids is 2.70 and the natural moisture content is 50%. What is its state of consistency in nature?",
-			"answers": {
-				"a": "50% firm clay",
-				"b": "55% clay",
-				"c": "40% hard clay",
-				"d": "66% medium clay"
-			},
-			"explanations": {
-				"a": "This is derived from the plasticity index vs liquid limit graph.",
-				"b": "This is derived from the plasticity index vs liquid limit graph.",
-				"c": "This is derived from the plasticity index vs liquid limit graph.",
-				"d": "This is derived from the plasticity index vs liquid limit graph."
-			},
-			"difficulty": "advanced",
-			"correctAnswer": "d"
-		}
-	]
+  "version": 2.0,
+  "questions": [
+    {
+      "question": "1. The liquid limit (LL), plastic limit (PL) and shrinkage limit (SL) of a cohesive soil satisfy which of the following relations?",
+      "answers": {
+        "a": "LL > PL > SL",
+        "b": "LL > PL < SL",
+        "c": "LL < PL < SL",
+        "d": "LL < PL > SL"
+      },
+      "explanations": {
+        "a": "Correct. As water content increases, soil transitions from solid to semi-solid (SL), then to plastic (PL), and finally to liquid (LL). Thus, LL > PL > SL.",
+        "b": "Incorrect. The plastic limit is always greater than the shrinkage limit in cohesive soils.",
+        "c": "Incorrect. This order is completely reversed; the liquid limit represents the highest water content state.",
+        "d": "Incorrect. The liquid limit cannot be less than the plastic limit."
+      },
+      "difficulty": "beginner",
+      "correctAnswer": "a"
+    },
+    {
+      "question": "2. What happens to the volume of a soil sample as it is dried below its shrinkage limit?",
+      "answers": {
+        "a": "It continues to decrease significantly",
+        "b": "It remains constant",
+        "c": "It increases slightly",
+        "d": "It becomes zero"
+      },
+      "explanations": {
+        "a": "Incorrect. Significant volume reduction stops once the shrinkage limit is reached.",
+        "b": "Correct. By definition, the shrinkage limit is the water content below which further reduction in moisture does not cause a decrease in the volume of the soil mass.",
+        "c": "Incorrect. Drying does not cause soil to expand.",
+        "d": "Incorrect. Soil solids always occupy a finite volume."
+      },
+      "difficulty": "beginner",
+      "correctAnswer": "b"
+    },
+    {
+      "question": "3. The 'A-line' on the plasticity chart separates:",
+      "answers": {
+        "a": "Sand from gravel",
+        "b": "Silt from clay",
+        "c": "Organic soil from inorganic soil",
+        "d": "Low plasticity from high plasticity"
+      },
+      "explanations": {
+        "a": "Incorrect. This separation is based on particle size, not plasticity.",
+        "b": "Correct. In the Casagrande plasticity chart, the A-line (PI = 0.73(LL-20)) generally separates inorganic clays (above) from inorganic silts (below).",
+        "c": "Incorrect. While organic soils also lie below the A-line, the primary separation is silt vs. clay.",
+        "d": "Incorrect. This separation is usually represented by a vertical line at LL = 50%."
+      },
+      "difficulty": "beginner",
+      "correctAnswer": "b"
+    },
+    {
+      "question": "4. A soil with a plasticity index of 0 is considered:",
+      "answers": {
+        "a": "Highly plastic",
+        "b": "Non-plastic",
+        "c": "Cohesive",
+        "d": "Saturated"
+      },
+      "explanations": {
+        "a": "Incorrect. High plasticity implies a large range between LL and PL.",
+        "b": "Correct. Soils like clean sands and gravels have no plastic state and are termed non-plastic (PI = 0).",
+        "c": "Incorrect. Non-plastic soils are typically cohesionless.",
+        "d": "Incorrect. Plasticity is a property of the soil type, not its current state of saturation."
+      },
+      "difficulty": "intermediate",
+      "correctAnswer": "b"
+    },
+    {
+      "question": "5. The flow index (If) is determined from which laboratory test?",
+      "answers": {
+        "a": "Plastic limit test",
+        "b": "Shrinkage limit test",
+        "c": "Liquid limit test",
+        "d": "Hydrometer test"
+      },
+      "explanations": {
+        "a": "Incorrect. The plastic limit test does not involve a flow curve.",
+        "b": "Incorrect. The shrinkage limit test measures volume change upon drying.",
+        "c": "Correct. The flow index is the slope of the 'flow curve' obtained by plotting water content versus the log of the number of blows in the Casagrande liquid limit test.",
+        "d": "Incorrect. The hydrometer test is for grain size distribution."
+      },
+      "difficulty": "intermediate",
+      "correctAnswer": "c"
+    },
+    {
+      "question": "6. Which index provides an indication of the shear strength of soil at the plastic limit?",
+      "answers": {
+        "a": "Plasticity index",
+        "b": "Toughness index",
+        "c": "Consistency index",
+        "d": "Liquidity index"
+      },
+      "explanations": {
+        "a": "Incorrect. The plasticity index only gives the range of the plastic state.",
+        "b": "Correct. The toughness index (PI/If) is a measure of the shear strength of the soil at its plastic limit.",
+        "c": "Incorrect. The consistency index indicates the firmness at the natural water content.",
+        "d": "Incorrect. The liquidity index indicates the state relative to the liquid limit."
+      },
+      "difficulty": "intermediate",
+      "correctAnswer": "b"
+    },
+    {
+      "question": "7. The atterberg limits of a clay are: LL = 60%, PL = 45% and SL = 25%. The natural moisture content is 50%. What is its state of consistency in nature?",
+      "answers": {
+        "a": "Solid",
+        "b": "Semi-solid",
+        "c": "Plastic",
+        "d": "Liquid"
+      },
+      "explanations": {
+        "a": "Incorrect. The water content (50%) is well above the shrinkage limit (25%).",
+        "b": "Incorrect. The water content (50%) is above the plastic limit (45%).",
+        "c": "Correct. Since the natural water content (50%) is between the plastic limit (45%) and the liquid limit (60%), the soil is in a plastic state.",
+        "d": "Incorrect. The water content (50%) is below the liquid limit (60%)."
+      },
+      "difficulty": "advanced",
+      "correctAnswer": "c"
+    },
+    {
+      "question": "8. A soil sample has a liquid limit of 40% and lies on the A-line. What is its plasticity index?",
+      "answers": {
+        "a": "14.6%",
+        "b": "20.0%",
+        "c": "25.4%",
+        "d": "10.0%"
+      },
+      "explanations": {
+        "a": "Correct. The equation of the A-line is PI = 0.73(LL - 20). For LL = 40%, PI = 0.73(40 - 20) = 0.73 * 20 = 14.6%.",
+        "b": "Incorrect. This does not match the A-line formula result.",
+        "c": "Incorrect. This value is too high for a soil on the A-line with LL=40.",
+        "d": "Incorrect. Check your calculation using the standard A-line formula."
+      },
+      "difficulty": "advanced",
+      "correctAnswer": "a"
+    },
+    {
+      "question": "9. If the liquidity index of a soil is negative (IL < 0), the soil is in which state?",
+      "answers": {
+        "a": "Liquid state",
+        "b": "Plastic state",
+        "c": "Semi-solid or solid state",
+        "d": "Saturated state"
+      },
+      "explanations": {
+        "a": "Incorrect. In the liquid state, IL > 1.",
+        "b": "Incorrect. In the plastic state, 0 < IL < 1.",
+        "c": "Correct. A negative liquidity index means the natural water content is less than the plastic limit, placing the soil in the semi-solid or solid state.",
+        "d": "Incorrect. Saturation is independent of the consistency index."
+      },
+      "difficulty": "advanced",
+      "correctAnswer": "c"
+    }
+  ]
 }
